@@ -62,18 +62,18 @@
     <div class="col-xs-12 col-sm-6 col-md-4">
       <article class="card">
         <div class="card-block text-xs-center head">
-          <h4 class="card-title">{{ annonce.titre }}</h4>
+          <h4 class="card-title">{{ annonce.titre }} </h4>
           <h6 class="card-subtitle">{{ annonce.ville }}, {{ annonce.prix }} CFA</h6>
         </div>
         <figure>
-          <img src="img/apartement_small.jpg" class="img-fluid hidden-sm-up" alt="appartement à vendre">
-          <img src="img/apartement_medium.jpg" class="img-fluid hidden-xs-down hidden-lg-up" alt="appartement à vendre">
-          <img src="img/apartement_large.jpg" class="img-fluid hidden-md-down" alt="appartement à vendre">
+          <img src="{{annonce.image.url}}" class="img-fluid hidden-sm-up" alt="appartement à vendre">
+          <img src="{{annonce.image.url}}" class="img-fluid hidden-xs-down hidden-lg-up" alt="appartement à vendre">
+          <img src="{{annonce.image.url}}" class="img-fluid hidden-md-down" alt="appartement à vendre">
         </figure>
         <div class="card-block text-xs-center">
           <p class="card-text">{{ annonce.description }}</p>
           <figure class="description">
-            <span><i class="fa fa-bed" aria-hidden="true"></i> {{ annonce.Ville }}</span>
+            <span><i class="fa fa-bed" aria-hidden="true"></i> {{ annonce.ville }}</span>
             <span><i class="fa fa-paper-plane" aria-hidden="true"></i>  {{ annonce.quartier }} </span>
             <span><i class="fa fa-tint" aria-hidden="true"></i> {{ annonce.standing }} </span>
           </figure>

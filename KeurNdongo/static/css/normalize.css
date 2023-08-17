@@ -20,6 +20,9 @@ body {
   margin: 0;
 }
 
+btn btn-outline-primary{
+  padding: 200px !important;
+}
 /* HTML5 display definitions
    ========================================================================== */
 
