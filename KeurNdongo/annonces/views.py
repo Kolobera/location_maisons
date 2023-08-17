@@ -10,7 +10,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Annonce
 
 def accueil(request):
-    annonces = Annonce.objects.order_by('-date_creation')
+    annonces = Annonce.objects.filter(louer=False).order_by('-date_creation')
+    
     # Code pour gérer les filtres (ville, quartier, prix, standing)
     context = {'annonces': annonces}
     return render(request, 'annonces/accueil.html', context)
