@@ -3,8 +3,17 @@
 
 {% block content %}
 {%csrf_token%}
-<br><br>
+
 <div class="container">
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      
+  <br>
+        <div class="alert alert-success" role="alert" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+      {% endfor %}
+    </ul>
+  {% endif %}
     <div class="row gutters">
     <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
     <div class="card h-100">
@@ -19,7 +28,7 @@
                 </div>
                 <div class="about">
                     <h5>Profile: Etudiant</h5>
-                    <p></p>
+                    <a href="{% url 'user:deconnexion' %}">Déconnexion</a>
                 </div>
             </div>
         </div>
@@ -30,44 +39,45 @@
         <div class="card-body">
             <div class="row gutters">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 class="mb-2 text-primary">Personal Details</h6>
+                    <h6 class="mb-2 text-primary">Informations personnels</h6>
                 </div>
+                <form method ="post" action="{% url 'user:mon_compte' %}" >
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         {%csrf_token%}
                         <label class="label" for="nom">Nom</label>
-                        <input type="text" name="nom" class="form-control" placeholder={{user.username}} required>
+                        <input type="text" name="nom" class="form-control" value={{user.last_name}} required>
                             </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label class="label" for="prenom">Prénom</label>
-                        <input type="text" name="prenom" class="form-control" placeholder={{user.prenom}} required>
+                        <input type="text" name="prenom" class="form-control" value={{user.first_name}} required>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="eMail">Email</label>
-                        <input type="email" name='email' class="form-control" id="eMail" placeholder={{user.email}}>
+                        <input type="email" name='email' class="form-control" id="eMail" value={{user.email}}>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <input type="text" name ='tel' class="form-control" id="phone" placeholder={{user.tel}}>
+                        <input type="text" name ='tel' class="form-control" id="phone" value={{user.tel}}>
                     </div>
                 </div>
 
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="password" name='password' class="form-control" id="eMail" placeholder={{user.email}}>
+                        <input type="password" name='password' class="form-control" id="eMail" value={{user.password}}>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label for="password1">Confirmer le mot de passe</label>
-                        <input type="password" name ='password1' class="form-control" id="phone" placeholder={{user.tel}}>
+                        <input type="password" name ='password1' class="form-control" id="phone" value={{user.password}} placeholder='mot de passe'>
                     </div>
                 </div>
                 
@@ -76,12 +86,81 @@
             <div class="row gutters">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="text-right">
-                        <button type="button" id="submit" name="submit" class="btn btn-secondary">Modifier</button>
-                        <button type="button" id="submit" name="submit" class="btn btn-primary">Mettre à jour</button>
+                        {% comment %} <button type="submit" id="submit" name="submit" class="btn btn-secondary">Modifier</button> {% endcomment %}
+                        <button type="submit" id="submit" name="submit" class="btn btn-primary">Mettre à jour</button>
                     </div>
                 </div>
             </div>
+        </form>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h6 class="mb-2 text-primary">Vos favoris</h6>
+            </div>
+            
+            {% for favoris in favoris %}
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <article class="card">
+        <div class="card-block text-xs-center head">
+          <h4 class="card-title">{{ favoris.annonce.titre }} </h4>
+          <h6 class="card-subtitle">{{ favoris.annonce.ville }}, {{ annonce.prix }} CFA</h6>
         </div>
+        <figure>
+          <img src="{{favoris.annonce.image.url}}" class="img-fluid hidden-sm-up" alt="appartement à vendre">
+          <img src="{{favoris.annonce.image.url}}" class="img-fluid hidden-xs-down hidden-lg-up" alt="appartement à vendre">
+          <img src="{{favoris.annonce.image.url}}" class="img-fluid hidden-md-down" alt="appartement à vendre">
+        </figure>
+        <div class="card-block text-xs-center">
+          <p class="card-text">{{ favoris.annonce.description }}</p>
+          <figure class="description">
+            <span><i class="fa fa-bed" aria-hidden="true"></i> {{ favoris.annonce.ville }}</span>
+            <span><i class="fa fa-paper-plane" aria-hidden="true"></i>  {{favoris.annonce.quartier }} </span>
+            <span><i class="fa fa-tint" aria-hidden="true"></i> {{ favoris.annonce.standing }} </span>
+          </figure>
+          <a href="#" class="card-link"><i class="fa fa-eye m-r-1" aria-hidden="true"></i>Voir</a>
+          <button class="btn btn-primary m-r-1"><i class="fa fa-star" aria-hidden="true"></i> Favoris</button>
+          <button class="btn btn-success">Louer</button>
+        </div>
+      </article>
+    </div>
+    {% empty %}
+            <p>Aucun favori enregistré.<p>
+    {% endfor %}
+
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <h6 class="mb-2 text-primary">Vos locations</h6>
+    </div>
+        {% for location in annonces_locataire %}
+        <div class="col-xs-12 col-sm-6 col-md-4">
+          <article class="card">
+            <div class="card-block text-xs-center head">
+              <h4 class="card-title">{{ location.annonce.titre }} </h4>
+              <h6 class="card-subtitle">{{ location.annonce.ville }}, {{ annonce.prix }} CFA</h6>
+            </div>
+            <figure>
+              <img src="{{location.annonce.image.url}}" class="img-fluid hidden-sm-up" alt="appartement à vendre">
+              <img src="{{location.annonce.image.url}}" class="img-fluid hidden-xs-down hidden-lg-up" alt="appartement à vendre">
+              <img src="{{location.annonce.image.url}}" class="img-fluid hidden-md-down" alt="appartement à vendre">
+            </figure>
+            <div class="card-block text-xs-center">
+              <p class="card-text">{{ location.annonce.description }}</p>
+              <figure class="description">
+                <span><i class="fa fa-bed" aria-hidden="true"></i> {{ location.annonce.ville }}</span>
+                <span><i class="fa fa-paper-plane" aria-hidden="true"></i>  {{location.annonce.quartier }} </span>
+                <span><i class="fa fa-tint" aria-hidden="true"></i> {{ location.annonce.standing }} </span>
+              </figure>
+              <a href="#" class="card-link"><i class="fa fa-eye m-r-1" aria-hidden="true"></i>Voir</a>
+              <button class="btn btn-primary m-r-1"><i class="fa fa-star" aria-hidden="true"></i> Favoris</button>
+              <button class="btn btn-success">Louer</button>
+            </div>
+          </article>
+        </div>
+        {% empty %}
+                <p>Aucune location<p>
+        {% endfor %}
+    
+            </div>
+        </div>
+
     </div>
     </div>
     </div>

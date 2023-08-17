@@ -12,4 +12,5 @@ urlpatterns = [
     path('favoris/supprimer/<int:favori_id>/', views.supprimer_favori, name='supprimer_favori'),
     path('locations/resilier/<int:annonce_id>/', views.resilier_location, name='resilier_location'),
     path('tableau-de-bord/', views.tableau_de_bord, name='tableau_de_bord'),
+    path('deconnexion/', views.deconnexion, name='deconnexion'),
 ]
