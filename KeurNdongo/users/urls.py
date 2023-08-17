@@ -15,4 +15,5 @@ urlpatterns = [
     path('locations/resilier/<int:annonce_id>/', views.resilier_location, name='resilier_location'),
     path('tableau-de-bord/', views.tableau_de_bord, name='tableau_de_bord'),
     path('deconnexion/', views.deconnexion, name='deconnexion'),
+    path('supprimer_annonce/<int:annonce_id>', views.supprimer_annonce, name='supprimer_annonce') 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -148,3 +148,11 @@ def resilier_location(request, annonce_id):
 def deconnexion(request):
     logout(request)
     return redirect('home')
+
+@login_required
+def supprimer_annonce(request, annonce_id):
+    annonce = Annonce.objects.get(id=annonce_id)
+
+    # Supprimer l'annonce
+    annonce.delete()
+    return redirect('user:tableau_de_bord')  # Rediriger vers la page d'accueil ou une autre vue
