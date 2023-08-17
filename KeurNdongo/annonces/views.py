@@ -5,6 +5,16 @@ from django.shortcuts import render, redirect
 from .models import Annonce
 from .forms import AnnonceForm
 
+
+from .models import Annonce
+
+def accueil(request):
+    annonces = Annonce.objects.order_by('-date_creation')
+    # Code pour gérer les filtres (ville, quartier, prix, standing)
+    context = {'annonces': annonces}
+    return render(request, 'annonces/accueil.html', context)
+
+
 def ajouter_annonce(request):
     if request.method == 'POST':
         form = AnnonceForm(request.POST)

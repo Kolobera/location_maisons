@@ -51,3 +51,18 @@ def liste_favoris(request):
     favoris = Favoris.objects.filter(user=request.user)
     return render(request, 'user/favoris_liste.html', {'favoris': favoris})
 
+from django.contrib.auth.decorators import login_required
+from annonces.models import Annonce
+
+@login_required
+def tableau_de_bord(request):
+    user = request.user
+    annonces_locataire = Annonce.objects.filter(locataire=user)
+    nombre_annonces_locataire = annonces_locataire.count()
+    # Calculez d'autres statistiques nécessaires
+    
+    context = {
+        'nombre_annonces_locataire': nombre_annonces_locataire,
+        # Ajoutez d'autres statistiques au contexte
+    }
+    return render(request, 'user/tableau_de_bord.html', context)

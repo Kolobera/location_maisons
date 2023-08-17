@@ -8,5 +8,5 @@ urlpatterns = [
     path('connexion/', views.connexion, name='connexion'),
     path('favoris/ajouter/<int:annonce_id>/', views.ajouter_favoris, name='ajouter_favoris'),
     path('favoris/', views.liste_favoris, name='favoris'),
-    # Autres URLs pour l'utilisateur
+    path('tableau-de-bord/', views.tableau_de_bord, name='tableau_de_bord'),
 ]
