@@ -17,14 +17,16 @@ def connexion(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        
+
+
         # Authentification de l'utilisateur
-        user = authenticate(request, username=username, password=password)
+        #user = authenticate(request, username=username, password=password)
         
+        user = User.objects.get(username=username, password=password)
         if user is not None:
             # Connexion de l'utilisateur
             login(request, user)
-            return redirect('nom_de_la_vue_après_connexion')  # Remplacez par le nom de la vue souhaitée après la connexion
+            return redirect('/')  # Remplacez par le nom de la vue souhaitée après la connexion
         else:
             # Authentification échouée
             return HttpResponse("Nom d'utilisateur ou mot de passe incorrect.")
