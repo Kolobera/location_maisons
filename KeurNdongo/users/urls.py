@@ -1,4 +1,6 @@
 # user/urls.py
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from . import views
 
@@ -13,4 +15,4 @@ urlpatterns = [
     path('locations/resilier/<int:annonce_id>/', views.resilier_location, name='resilier_location'),
     path('tableau-de-bord/', views.tableau_de_bord, name='tableau_de_bord'),
     path('deconnexion/', views.deconnexion, name='deconnexion'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

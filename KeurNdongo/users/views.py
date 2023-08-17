@@ -30,7 +30,9 @@ def connexion(request):
         }
             # Connexion de l'utilisateur
             login(request, user)
-            return redirect('user:mon_compte')  # Remplacez par le nom de la vue souhaitée après la connexion
+            if (user.is_student):
+                return redirect('user:mon_compte')  # Remplacez par le nom de la vue souhaitée après la connexion
+            return redirect('user:tableau_de_bord')
         else:
             # Authentification échouée
             return HttpResponse("Nom d'utilisateur ou mot de passe incorrect.")

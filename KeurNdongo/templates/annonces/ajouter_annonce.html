@@ -3,7 +3,9 @@
 
 {% block content %}
 {%csrf_token%}
-
+{% if request.user.is_student %}
+    Vous ne pouvez ajouter de bien immobilier.
+{% else %}
 <div class="container">
     {% if messages %}
     <ul class="messages">
@@ -22,7 +24,7 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <h6 class="mb-2 text-primary">Informations sur le bien immobilier</h6>
                 </div>
-                <form method ="post" action="{% url 'user:mon_compte' %}" >
+                <form method ="post" action="{% url 'ajouter' %}" enctype="multipart/form-data">
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="form-group">
                         {%csrf_token%}
@@ -80,7 +82,7 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="text-right">
                         {% comment %} <button type="submit" id="submit" name="submit" class="btn btn-secondary">Modifier</button> {% endcomment %}
-                        <button type="submit" id="submit" name="submit" class="btn btn-primary">Mettre à jour</button>
+                        <button type="submit" id="submit" name="submit" class="btn btn-primary">Ajouter</button>
                     </div>
                 </div>
             </div>
@@ -92,4 +94,5 @@
     </div>
     </div>
     </div>
+    {% endif %}
 {% endblock %}

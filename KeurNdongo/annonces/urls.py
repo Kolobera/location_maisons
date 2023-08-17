@@ -9,4 +9,5 @@ urlpatterns = [
     path('annonces/ajouter/', views.ajouter_annonce, name='ajouter'),
     path('', views.accueil, name="home"),
     # Autres URLs pour les annonces
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

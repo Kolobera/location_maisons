@@ -20,5 +20,5 @@ class Annonce(models.Model):
     standing = models.CharField(max_length=10, choices=TANDING_CHOICES)
     date_creation = models.DateTimeField(auto_now_add=True)
     louer=models.BooleanField(default=False)
-    image = models.ImageField(upload_to='images')
+    image = models.ImageField(upload_to='images', default=None)
 
