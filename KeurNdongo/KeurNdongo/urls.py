@@ -21,5 +21,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('user/', include('user.urls')),  # Inclure les URLs de l'application "user"
     path('annonces/', include('annonces.urls')),  # Inclure les URLs de l'application "annonces"
+    path('', include('annonces.urls')),
     # Autres URLs de votre projet, si nécessaire
 ]

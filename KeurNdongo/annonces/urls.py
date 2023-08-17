@@ -2,8 +2,8 @@
 from django.urls import path
 from . import views
 
-app_name = 'annonces'
 urlpatterns = [
-    path('ajouter/', views.ajouter_annonce, name='ajouter'),
+    path('annonces/ajouter/', views.ajouter_annonce, name='ajouter'),
+    path('', views.home, name="home"),
     # Autres URLs pour les annonces
 ]
