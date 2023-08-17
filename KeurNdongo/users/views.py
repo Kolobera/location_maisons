@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.shortcuts import render,redirect
 from annonces.models import Annonce
 from .models import Favoris
+from django.contrib import messages
 
 
 
@@ -27,7 +28,7 @@ def connexion(request):
         }
             # Connexion de l'utilisateur
             login(request, user)
-            return render(request,'user/mon_compte.html',context)  # Remplacez par le nom de la vue souhaitée après la connexion
+            return redirect('user:mon_compte')  # Remplacez par le nom de la vue souhaitée après la connexion
         else:
             # Authentification échouée
             return HttpResponse("Nom d'utilisateur ou mot de passe incorrect.")
@@ -59,7 +60,7 @@ def inscription(request):
         user.save()
             # Connexion automatique après l'inscription
         login(request, user)
-        # return redirect('home')  # Rediriger vers la page d'accueil ou une autre page
+        return redirect('home')  # Rediriger vers la page d'accueil ou une autre page
     else:
         
         return render(request, 'user/inscription.html')
@@ -95,23 +96,34 @@ def tableau_de_bord(request):
 def mon_compte(request):
     user = request.user
     # profile_form = UserProfileForm(instance=user)
-    
-    annonces_locataire = Annonce.objects.filter(locataire=user)
-    favoris = Favoris.objects.filter(user=user)
-    
-    # if request.method == 'POST':
-    #     profile_form = UserProfileForm(request.POST, instance=user)
-    #     if profile_form.is_valid():
-    #         profile_form.save()
-    #         return redirect('user:mon_compte')
-    
-    context = {
-        'user': user,
-        # 'profile_form': profile_form,
-        'annonces_locataire': annonces_locataire,
-        'favoris': favoris
-    }
-    return render(request, 'user/mon_compte.html', context)
+    if request.method == 'POST':
+        user = request.user
+        user.last_name = request.POST['nom']
+        user.first_name = request.POST['prenom']
+        user.tel = request.POST['tel']
+        user.email = request.POST['email']
+        # user.password = request.POST['password']
+        user.save()
+        user.set_password(request.POST['password'])
+        messages.success(request, 'Informations modifiés avec succès')
+        return render(request, 'user/mon_compte.html')
+    else:
+        annonces_locataire = Annonce.objects.filter(locataire=user)
+        favoris = Favoris.objects.filter(user=user)
+        
+        # if request.method == 'POST':
+        #     profile_form = UserProfileForm(request.POST, instance=user)
+        #     if profile_form.is_valid():
+        #         profile_form.save()
+        #         return redirect('user:mon_compte')
+        
+        context = {
+            'user': user,
+            # 'profile_form': profile_form,
+            'annonces_locataire': annonces_locataire,
+            'favoris': favoris
+        }
+        return render(request, 'user/mon_compte.html', context)
 
 @login_required
 def supprimer_favori(request, favori_id):
@@ -126,3 +138,7 @@ def resilier_location(request, annonce_id):
     annonce.locataire = None  # Supprimer le locataire de l'annonce
     annonce.save()
     return redirect('user:mon_compte')
+
+def deconnexion(request):
+    logout(request)
+    return redirect('home')
