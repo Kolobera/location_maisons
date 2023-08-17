@@ -27,10 +27,14 @@
                     <h6 class="user-email">{{user.email}}</h6>
                 </div>
                 <div class="about">
-                    <h5>Profile: Etudiant</h5>
+                    {% if request.user.is_student %}
+                        <h5>Profile: Etudiant</h5>
+                    {% else %}
+                        <h5>Profile: Propriétaire</h5>
+                    {% endif %}
                     <a href="{% url 'user:deconnexion' %}">Déconnexion</a>
                 </div>
-            </div>
+            </div>  
         </div>
     </div>
     </div>

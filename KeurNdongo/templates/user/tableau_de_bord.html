@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
+    <div class="col-xl-3 col-md-6s">
         <div class="card bg-pattern">
             <div class="card-body">
                 <div class="float-right">
@@ -49,14 +49,12 @@
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
-        <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between mb-3">
-              <button class="btn btn-danger" type="button"><i class="fa fa-plus mr-1"></i>Ajouter une maison</button>
-              <a href="{% url 'nom_de_la_vue_de_deconnexion' %}" class="btn btn-danger" type="button"><i class="fa fa-sign-out mr-1"></i>Se déconnecter</a>
+                <a href="{% url 'ajouter' %}" class="btn btn-danger" type="button"><i class="fa fa-plus mr-1"></i>Ajouter</a>
+              <a href="{% url 'user:mon_compte' %}" class="btn btn-danger" type="button"><i class="fa fa fa-user mr-1"></i>Mon compte</a>
             </div>
           </div>
-        </div>
     </div>
 </div>
 <!-- end row -->
@@ -81,8 +79,11 @@
                             {% for maison in maisons%}
                                 <tr>
                                     <th scope="row">{{ maison.id }}</th>
-                                    <td>{{ maison.titre }}</td>
-                                    <td>{{ maison.date_creation }}</td>
+                                    <td>
+                                        <a href="#">{{ maison.titre }}</a>
+                                    </td>
+
+                                    <td>{{ maison.date_creation|date:"SHORT_DATE_FORMAT" }}</td>
                                     <td>
                                         {% if maison.louer %}
                                             <span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i> Louée </span>
@@ -112,19 +113,7 @@
                 </div>
                 <!-- end project-list -->
 
-                <div class="pt-3">
-                    <ul class="pagination justify-content-end mb-0">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </div>
+                
             </div>
         </div>
     </div>
