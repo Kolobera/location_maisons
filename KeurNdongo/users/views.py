@@ -66,3 +66,26 @@ def tableau_de_bord(request):
         # Ajoutez d'autres statistiques au contexte
     }
     return render(request, 'user/tableau_de_bord.html', context)
+
+
+@login_required
+def mon_compte(request):
+    user = request.user
+    profile_form = UserProfileForm(instance=user)
+    
+    annonces_locataire = Annonce.objects.filter(locataire=user)
+    favoris = Favoris.objects.filter(user=user)
+    
+    if request.method == 'POST':
+        profile_form = UserProfileForm(request.POST, instance=user)
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('user:mon_compte')
+    
+    context = {
+        'user': user,
+        'profile_form': profile_form,
+        'annonces_locataire': annonces_locataire,
+        'favoris': favoris
+    }
+    return render(request, 'user/mon_compte.html', context)
