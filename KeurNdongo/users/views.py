@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 # user/views.py
 from django.shortcuts import render,redirect
@@ -9,16 +10,25 @@ from .models import Favoris
 
 # user/views.py
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render, redirect
 
 def connexion(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        # Authentification de l'utilisateur
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            # Connexion de l'utilisateur
             login(request, user)
-            return redirect('home')  # Rediriger vers la page d'accueil ou une autre page
+            return redirect('nom_de_la_vue_après_connexion')  # Remplacez par le nom de la vue souhaitée après la connexion
+        else:
+            # Authentification échouée
+            return HttpResponse("Nom d'utilisateur ou mot de passe incorrect.")
+      # Rediriger vers la page d'accueil ou une autre page
     else:
         form = AuthenticationForm()
     return render(request, 'user/connexion.html', {'form': form})
@@ -33,12 +43,13 @@ from users.models import User
 def inscription(request):
     if request.method == 'POST':
         user = User.objects.create(
-        nom = request.POST['nom'],
-        prenom = request.POST['prenom'],
-        tel = request.POST['tel'],
-        email = request.POST['email'],
-        password = request.POST['password'],
-        est_etudiant = request.POST['est_etudiant'],
+            username = request.POST['username'],
+            last_name = request.POST['nom'],
+            first_name = request.POST['prenom'],
+            tel = request.POST['tel'],
+            email = request.POST['email'],
+            password = request.POST['password'],
+            is_student = True, #request.POST['est_etudiant'],
          
         )
         
