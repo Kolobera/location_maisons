@@ -104,6 +104,9 @@ textarea {
 body, #personal_space, .gallery, .description {
   display: flex;
 }
+nav {
+  padding: 20px !important;;
+}
 
 body {
   min-height: 100vh;
@@ -570,4 +573,7 @@ footer h4 {
     h3 {
         page-break-after: avoid;
     }
+}
+btn btn-outline-primary{
+  padding: 200px !important;
 }
