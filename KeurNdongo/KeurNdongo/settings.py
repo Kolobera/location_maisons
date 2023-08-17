@@ -64,7 +64,7 @@ ROOT_URLCONF = "KeurNdongo.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -127,7 +127,9 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS=[STATIC_DIR,]
+STATICFILES_DIRS=[BASE_DIR / 'static',]
+#STATIC_ROOT = os.path.join(BASE_DIR, 'templates')
+
 MEDIA_ROOT=os.path.join(BASE_DIR,'static')
 
 # Default primary key field type

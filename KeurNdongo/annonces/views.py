@@ -5,8 +5,6 @@ from django.shortcuts import render, redirect
 from .models import Annonce
 from django.contrib.auth.decorators import login_required
 
-<<<<<<< HEAD
-=======
 
 from .models import Annonce
 
@@ -17,7 +15,6 @@ def accueil(request):
     return render(request, 'annonces/accueil.html', context)
 
 @login_required
->>>>>>> c5098e6cc486126f5a33c9842a0a82be912b4780
 def ajouter_annonce(request):
     if request.method == 'POST':
         
