@@ -20,9 +20,9 @@ def connexion(request):
 
 
         # Authentification de l'utilisateur
-        #user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=username, password=password)
         
-        user = User.objects.get(username=username, password=password)
+        #user = User.objects.get(username=username, password=password)
         if user is not None:
             context = {
             "user" : user,
@@ -81,14 +81,16 @@ from annonces.models import Annonce
 
 @login_required
 def tableau_de_bord(request):
-    user = request.user
-    annonces_locataire = Annonce.objects.filter(locataire=user)
-    nombre_annonces_locataire = annonces_locataire.count()
-    # Calculez d'autres statistiques nécessaires
+    proprietaire = request.user
+    maisons = Annonce.objects.filter(proprietaire=proprietaire)
+    nombre_maisons = maisons.count()
+    nombre_maisons_louees = maisons.filter(louer=True).count()
     
     context = {
-        'nombre_annonces_locataire': nombre_annonces_locataire,
-        # Ajoutez d'autres statistiques au contexte
+        'maisons': maisons,
+        'nombre_maisons': nombre_maisons,
+        'nombre_maisons_louees': nombre_maisons_louees,
+        'nombre_maisons_non_louees': nombre_maisons - nombre_maisons_louees,
     }
     return render(request, 'user/tableau_de_bord.html', context)
 
