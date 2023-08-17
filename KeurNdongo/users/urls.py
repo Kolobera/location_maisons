@@ -6,6 +6,7 @@ app_name = 'user'
 urlpatterns = [
     path('inscription/', views.inscription, name='inscription'),
     path('connexion/', views.connexion, name='connexion'),
+    path('mon-compte/', views.mon_compte, name='mon_compte'),
     path('favoris/ajouter/<int:annonce_id>/', views.ajouter_favoris, name='ajouter_favoris'),
     path('favoris/', views.liste_favoris, name='favoris'),
     path('favoris/supprimer/<int:favori_id>/', views.supprimer_favori, name='supprimer_favori'),

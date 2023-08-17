@@ -24,20 +24,22 @@ def connexion(request):
         
         user = User.objects.get(username=username, password=password)
         if user is not None:
+            context = {
+            "user" : user,
+        }
             # Connexion de l'utilisateur
             login(request, user)
-            return redirect('/')  # Remplacez par le nom de la vue souhaitée après la connexion
+            return render(request,'user/mon_compte.html',context)  # Remplacez par le nom de la vue souhaitée après la connexion
         else:
             # Authentification échouée
             return HttpResponse("Nom d'utilisateur ou mot de passe incorrect.")
       # Rediriger vers la page d'accueil ou une autre page
     else:
-        form = AuthenticationForm()
-    return render(request, 'user/connexion.html', {'form': form})
+        
+        return render(request, 'user/connexion.html')
 
 
 # user/views.py
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from users.models import User
@@ -54,11 +56,12 @@ def inscription(request):
             is_student = True, #request.POST['est_etudiant'],
          
         )
+        user.set_password(request.POST['password'])
         
         user.save()
             # Connexion automatique après l'inscription
         login(request, user)
-        return redirect('home')  # Rediriger vers la page d'accueil ou une autre page
+        # return redirect('home')  # Rediriger vers la page d'accueil ou une autre page
     else:
         
         return render(request, 'user/inscription.html')
